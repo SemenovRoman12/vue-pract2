@@ -3,8 +3,8 @@ export default {
   name: "CardForm",
   data() {
     return {
-      title: "", // Заголовок задачи
-      tasks: ["", "", ""], // Минимум 3 задачи
+      title: "",
+      tasks: ["", "", ""],
     };
   },
   computed: {
@@ -23,7 +23,7 @@ export default {
           notes: this.tasks.map(task => ({ text: task, done: false })),
         });
         this.title = "";
-        this.tasks = ["", "", ""]; // Очистка после добавления
+        this.tasks = ["", "", ""];
       } else {
         alert("Введите заголовок и минимум 3 задачи!");
       }
