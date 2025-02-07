@@ -6,6 +6,9 @@ export default {
   name: "App",
   components: { Columns, CardForm },
   methods: {
+    addCard(newCard) {
+      this.$refs.columns.addCard(newCard);
+    }
   }
 };
 </script>
@@ -13,22 +16,23 @@ export default {
 <template>
   <div class="container">
     <h1>Менеджер задач</h1>
-    <Columns ref="columns" />
+    <CardForm @add-card="addCard"/>
+    <Columns ref="columns"/>
   </div>
 </template>
 
 <style scoped>
-  .container {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 20px;
-    text-align: center;
-  }
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+  text-align: center;
+}
 
-  h1 {
-    color: #333;
-    font-size: 24px;
-    margin-bottom: 20px;
-    font-weight: bold;
-  }
+h1 {
+  color: #333;
+  font-size: 24px;
+  margin-bottom: 20px;
+  font-weight: bold;
+}
 </style>
