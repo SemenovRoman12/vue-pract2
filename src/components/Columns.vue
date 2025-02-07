@@ -1,57 +1,57 @@
 <script>
-import Card from "@/components/Card.vue";
+  import Card from "@/components/Card.vue";
 
-export default {
-  name: "Columns",
-  components: { Card },
-  data() {
-    return {
-      columns: {
-        todo: [],
-        inProgress: [],
-        done: [],
+  export default {
+    name: "Columns",
+    components: { Card },
+    data() {
+      return {
+        columns: {
+          todo: [],
+          inProgress: [],
+          done: [],
+        },
+        maxTodo: 3,
+        maxInProgress: 5,
+        isTodoLocked: false,
+      };
+    },
+    methods: {
+      addCard(newCard) {
+        if (this.columns.todo.length < this.maxTodo) {
+          this.columns.todo.push(newCard);
+        } else {
+          alert("Максимум 3 карточки в первой колонке!");
+        }
       },
-      maxTodo: 3,
-      maxInProgress: 5,
-      isTodoLocked: false,
-    };
-  },
-  methods: {
-    addCard(newCard) {
-      if (this.columns.todo.length < this.maxTodo) {
-        this.columns.todo.push(newCard);
-      } else {
-        alert("Максимум 3 карточки в первой колонке!");
+      moveToInProgress(index) {
+        if (this.columns.inProgress.length < this.maxInProgress) {
+          const card = this.columns.todo.splice(index, 1)[0];
+          this.columns.inProgress.push(card);
+        }
+        this.checkLocks();
+      },
+      moveBackToTodo(index) {
+        const card = this.columns.inProgress.splice(index, 1)[0];
+        if (this.columns.todo.length < this.maxTodo) {
+          this.columns.todo.push(card);
+        } else {
+          alert("Нет места в первой колонке!");
+          this.columns.inProgress.push(card);
+        }
+        this.checkLocks();
+      },
+      moveToDone(index, completedAt) {
+        const card = this.columns.inProgress.splice(index, 1)[0];
+        card.completedAt = completedAt;
+        this.columns.done.push(card);
+        this.checkLocks();
+      },
+      checkLocks() {
+        this.isTodoLocked = this.columns.inProgress.length >= this.maxInProgress; // отображает статус первой колонки и всегда определяется после мувов
       }
-    },
-    moveToInProgress(index) {
-      if (this.columns.inProgress.length < this.maxInProgress) {
-        const card = this.columns.todo.splice(index, 1)[0];
-        this.columns.inProgress.push(card);
-      }
-      this.checkLocks();
-    },
-    moveBackToTodo(index) {
-      const card = this.columns.inProgress.splice(index, 1)[0];
-      if (this.columns.todo.length < this.maxTodo) {
-        this.columns.todo.push(card);
-      } else {
-        alert("Нет места в первой колонке!");
-        this.columns.inProgress.push(card);
-      }
-      this.checkLocks();
-    },
-    moveToDone(index, completedAt) {
-      const card = this.columns.inProgress.splice(index, 1)[0];
-      card.completedAt = completedAt;
-      this.columns.done.push(card);
-      this.checkLocks();
-    },
-    checkLocks() {
-      this.isTodoLocked = this.columns.inProgress.length >= this.maxInProgress;
     }
-  }
-};
+  };
 </script>
 
 <template>

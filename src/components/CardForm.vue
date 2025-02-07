@@ -11,7 +11,7 @@ export default {
     isValid() {
       return (
           this.title.trim() !== "" &&
-          this.tasks.slice(0, 3).every(task => task.trim() !== "")
+          this.tasks.slice(0, this.tasks.length).every(task => task.trim() !== "")
       );
     }
   },
@@ -21,7 +21,7 @@ export default {
         this.$emit("add-card", {
           title: this.title,
           notes: this.tasks.map(task => ({ text: task, done: false })),
-        });
+        }); // эмитит массив объектов где объект это задача и поле done
         this.title = "";
         this.tasks = ["", "", ""];
       } else {
